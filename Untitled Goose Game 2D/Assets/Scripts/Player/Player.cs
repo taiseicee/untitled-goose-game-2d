@@ -64,10 +64,12 @@ public class Player : MonoBehaviour {
 
     private void HandleStateFall() {
         if (!moveComponent.IsFalling() && moveComponent.IsMoving()) {
+            moveComponent.SnapToGround();
             ChangeState(State.Walk);
             return;
         }
         if (!moveComponent.IsFalling()) {
+            moveComponent.SnapToGround();
             ChangeState(State.Idle);
             return;
         }
