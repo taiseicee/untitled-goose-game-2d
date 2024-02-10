@@ -11,6 +11,7 @@ public class PlayerMoveComponent : MonoBehaviour {
     [SerializeField, Range(0f, 25f)] private float maxAcceleration = 12f;
     [SerializeField, Range(0f, 100f)] private float jumpInitialVelocity = 8f;
     [SerializeField, Range(0f, 1f)] private float gravityMultiplier = 0.2f;
+    [SerializeField, Range(0f, 90f)] private float maxWalkableAngle = 60f;
     [SerializeField] private Transform groundCheckArea;
     [SerializeField] private ContactFilter2D walkableFilter;
     [SerializeField] private Transform predictiveCollider;
@@ -86,7 +87,6 @@ public class PlayerMoveComponent : MonoBehaviour {
 
     private void CollideAndSlide(float input) {
         CalculateVelocity(input);
-        // TODO: Collision Detection
 
         RaycastHit2D[] circleCastHitResults = new RaycastHit2D[1];
 
@@ -105,7 +105,20 @@ public class PlayerMoveComponent : MonoBehaviour {
             return;
         }
 
-        velocity.x = 0;
+        float hitAngle = Mathf.Abs(90 - Vector2.Angle(Vector2.up, circleCastHitResults[0].normal));
+        if (hitAngle > maxWalkableAngle) {
+            velocity.x = 0;
+            UpdatePosition();
+            return;
+        }
+
+        Vector2 reducedVelocity = circleCastHitResults[0].fraction * velocity;
+        Vector2 remainingVelocity = velocity - reducedVelocity;
+        Vector2 hitTangential = Vector2.Perpendicular(circleCastHitResults[0].normal);
+        // hitTangential's magnitude is essentially 1f
+        Vector2 projectedVelocity = Vector2.Dot(remainingVelocity, hitTangential) * hitTangential;
+
+        velocity = reducedVelocity + projectedVelocity;
         UpdatePosition();
     }
 
