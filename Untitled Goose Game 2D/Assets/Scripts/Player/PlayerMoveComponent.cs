@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMoveComponent : MonoBehaviour {
@@ -19,10 +20,7 @@ public class PlayerMoveComponent : MonoBehaviour {
     private Vector2 velocity;
     private Player player;
     private Collider2D[] fallCollisionResults = new Collider2D[1];
-    private Vector3 predictiveColliderLocalPosition;
-    private void Awake() {
-        predictiveColliderLocalPosition = predictiveCollider.localPosition;
-    }
+     private bool canJump = false;
 
     public void Init(Player player) {
         this.player = player;
@@ -49,7 +47,10 @@ public class PlayerMoveComponent : MonoBehaviour {
     }
 
     public void Jump() {
-        velocity.y += jumpInitialVelocity;
+        if (canJump) {
+            velocity.y += jumpInitialVelocity;
+            canJump = false;
+        }
         UpdatePosition();
     }
 
@@ -76,6 +77,7 @@ public class PlayerMoveComponent : MonoBehaviour {
             player.transform.position.z
         );
         velocity.y = 0f;
+        canJump = true;
     }
 
     public bool IsMoving() {
@@ -86,24 +88,24 @@ public class PlayerMoveComponent : MonoBehaviour {
         CalculateVelocity(input);
         // TODO: Collision Detection
 
-        Collider2D[] collisions = new Collider2D[1];
-        predictiveCollider.transform.position += (Vector3)velocity * Time.deltaTime;
-        int numCollisions = Physics2D.OverlapCircle(
-            predictiveCollider.transform.position, 
-            predictiveCollider.localScale.x/2.1f, 
-            collidableFilter, 
-            collisions
+        RaycastHit2D[] circleCastHitResults = new RaycastHit2D[1];
+
+        int numCircleCastHitResults = Physics2D.CircleCast(
+            predictiveCollider.transform.position,
+            predictiveCollider.localScale.x/2.1f,
+            velocity.normalized,
+            collidableFilter,
+            circleCastHitResults,
+            velocity.magnitude * Time.deltaTime
         );
-        predictiveCollider.transform.localPosition = predictiveColliderLocalPosition;
         
-        bool didCollide = numCollisions > 0;
+        bool didCollide = numCircleCastHitResults > 0;
         if (!didCollide) {
             UpdatePosition();
             return;
         }
 
         velocity.x = 0;
-
         UpdatePosition();
     }
 

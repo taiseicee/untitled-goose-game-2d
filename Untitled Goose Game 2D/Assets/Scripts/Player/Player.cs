@@ -84,7 +84,6 @@ public class Player : MonoBehaviour {
     }
 
     private void ChangeState(State toState) {
-        print(toState);
         currentState = toState;
     }
 }
