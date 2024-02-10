@@ -65,7 +65,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  sphereCollider: {fileID: 897350847050660731}
+  predictiveCollider: {fileID: 0}
   collidableFilter:
     useTriggers: 0
     useLayerMask: 1
@@ -300,8 +300,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1013934441267137038}
   - {fileID: 897350847050660731}
+  - {fileID: 1013934441267137038}
   - {fileID: 4896052706578905538}
   - {fileID: 1595658045059004529}
   m_Father: {fileID: 0}

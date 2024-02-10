@@ -12,13 +12,17 @@ public class PlayerMoveComponent : MonoBehaviour {
     [SerializeField, Range(0f, 1f)] private float gravityMultiplier = 0.2f;
     [SerializeField] private Transform groundCheckArea;
     [SerializeField] private ContactFilter2D walkableFilter;
-    [SerializeField] private Transform sphereCollider;
+    [SerializeField] private Transform predictiveCollider;
     [SerializeField] private ContactFilter2D collidableFilter;
 
     private float currentMaxSpeed;
     private Vector2 velocity;
     private Player player;
-    Collider2D[] fallCollisionResults = new Collider2D[1];
+    private Collider2D[] fallCollisionResults = new Collider2D[1];
+    private Vector3 predictiveColliderLocalPosition;
+    private void Awake() {
+        predictiveColliderLocalPosition = predictiveCollider.localPosition;
+    }
 
     public void Init(Player player) {
         this.player = player;
@@ -50,7 +54,6 @@ public class PlayerMoveComponent : MonoBehaviour {
     }
 
     public bool IsFalling() {
-        //BoxCast(Vector2 origin, Vector2 size, float angle, Vector2 direction, float distance)
         int numCollisions = Physics2D.OverlapBox(
             groundCheckArea.position,
             groundCheckArea.localScale,
@@ -63,8 +66,16 @@ public class PlayerMoveComponent : MonoBehaviour {
 
     public void SnapToGround() {
         if (fallCollisionResults.Length < 1) return;
-        Vector2 groundSurface = Physics2D.ClosestPoint(sphereCollider.transform.position, fallCollisionResults[0]);
-        player.transform.position = new Vector3(player.transform.position.x, groundSurface.y, player.transform.position.z);
+        Vector2 groundSurface = Physics2D.ClosestPoint(
+            predictiveCollider.transform.position, 
+            fallCollisionResults[0]
+        );
+        player.transform.position = new Vector3(
+            player.transform.position.x, 
+            groundSurface.y, 
+            player.transform.position.z
+        );
+        velocity.y = 0f;
     }
 
     public bool IsMoving() {
@@ -73,20 +84,25 @@ public class PlayerMoveComponent : MonoBehaviour {
 
     private void CollideAndSlide(float input) {
         CalculateVelocity(input);
-        velocity.y = 0f;
         // TODO: Collision Detection
 
         Collider2D[] collisions = new Collider2D[1];
-        int numCollisions = Physics2D.OverlapCircle(sphereCollider.transform.position, sphereCollider.localScale.x/2.1f, collidableFilter, collisions);
+        predictiveCollider.transform.position += (Vector3)velocity * Time.deltaTime;
+        int numCollisions = Physics2D.OverlapCircle(
+            predictiveCollider.transform.position, 
+            predictiveCollider.localScale.x/2.1f, 
+            collidableFilter, 
+            collisions
+        );
+        predictiveCollider.transform.localPosition = predictiveColliderLocalPosition;
         
-        if (numCollisions <= 0) {
+        bool didCollide = numCollisions > 0;
+        if (!didCollide) {
             UpdatePosition();
             return;
         }
 
-        float collisionDirection = collisions[0].ClosestPoint(player.transform.position).x - player.transform.position.x;
-
-        if (velocity.x * collisionDirection > 0) velocity.x = 0;
+        velocity.x = 0;
 
         UpdatePosition();
     }
