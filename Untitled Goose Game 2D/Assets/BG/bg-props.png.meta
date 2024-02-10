@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 757b118b20a21c34cb786c83851229cd
+guid: 827d4205bef891548b68c2cb5e7b58e0
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 80
+  spritePixelsToUnits: 96
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -110,400 +110,358 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 32goose-spritesheet_0
+      name: bg-props_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 800
-        width: 240
-        height: 160
+        x: 198
+        y: 984
+        width: 276
+        height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 20bb29910435a0e4d872c43ad3680ffb
-      internalID: 115864878
+      spriteID: bc645d88caae0d24cacb78d72bcf7d46
+      internalID: -1768351459
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32goose-spritesheet_1
+      name: bg-props_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 640
-        width: 240
-        height: 160
+        x: 504
+        y: 984
+        width: 42
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8907fe321b211b24da1b08c773514f53
-      internalID: -897086897
+      spriteID: 4f0d608279ac44a42905aba673b748c3
+      internalID: 1169999926
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32goose-spritesheet_2
+      name: bg-props_2
       rect:
         serializedVersion: 2
-        x: 240
-        y: 640
-        width: 240
-        height: 160
+        x: 576
+        y: 984
+        width: 24
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 196dcd66c146d4748b68d9cdd9d579d7
-      internalID: 679421804
+      spriteID: bb3f4e6497071e74ebb910de97db602b
+      internalID: -1094953783
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32goose-spritesheet_3
+      name: bg-props_3
       rect:
         serializedVersion: 2
-        x: 480
-        y: 640
-        width: 240
-        height: 160
+        x: 684
+        y: 984
+        width: 66
+        height: 78
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c85e618977c6cc949963acc998feace9
-      internalID: -861616009
+      spriteID: 07e683021384cc1439b1ddb9ff227290
+      internalID: -1336577031
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32goose-spritesheet_4
+      name: bg-props_4
       rect:
         serializedVersion: 2
-        x: 720
-        y: 640
-        width: 240
-        height: 160
+        x: 786
+        y: 984
+        width: 66
+        height: 72
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e4461519aae8e3d40b42e08d2b495db4
-      internalID: 1291441118
+      spriteID: ee2d4688a85719544bbd7006e80aaf44
+      internalID: 1569428726
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32goose-spritesheet_5
+      name: bg-props_5
       rect:
         serializedVersion: 2
-        x: 0
-        y: 480
-        width: 240
-        height: 160
+        x: 882
+        y: 984
+        width: 54
+        height: 72
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 356479cf7da00bd49a3cda1c5f4484bb
-      internalID: 865125568
+      spriteID: 429d15359e8d55540aeb2823e71906c8
+      internalID: -1357306597
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32goose-spritesheet_6
+      name: bg-props_6
       rect:
         serializedVersion: 2
-        x: 240
-        y: 480
-        width: 240
-        height: 160
+        x: 978
+        y: 984
+        width: 54
+        height: 78
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f35e87cced1887748b33f3f6faf8c465
-      internalID: -170060078
+      spriteID: 134f2940886bd9049b6e0698f70ee16a
+      internalID: 1219609175
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32goose-spritesheet_7
+      name: bg-props_7
       rect:
         serializedVersion: 2
-        x: 480
-        y: 480
-        width: 240
-        height: 160
+        x: 1170
+        y: 888
+        width: 156
+        height: 192
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1a9e821372c96224bad7d4c775f4a180
-      internalID: 1329467458
+      spriteID: a2f119c6427a992469d382ff1d0164c3
+      internalID: -1537599703
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32goose-spritesheet_8
+      name: bg-props_8
       rect:
         serializedVersion: 2
-        x: 720
-        y: 480
-        width: 240
-        height: 160
+        x: 192
+        y: 888
+        width: 288
+        height: 72
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8f74702a87f81af4c83055cecf61532d
-      internalID: -1097396480
+      spriteID: 302bb9b00f6ceed489ee1aadf2620649
+      internalID: -445000584
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32goose-spritesheet_9
+      name: bg-props_9
       rect:
         serializedVersion: 2
-        x: 960
-        y: 480
-        width: 240
-        height: 160
+        x: 612
+        y: 888
+        width: 30
+        height: 30
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 28019cb54e790e248b5fdc778eb245e7
-      internalID: 2027118510
+      spriteID: 7c6fe92a39bdf0445bf1ee028b1f2a7e
+      internalID: -1594045183
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32goose-spritesheet_10
+      name: bg-props_10
       rect:
         serializedVersion: 2
-        x: 0
-        y: 320
-        width: 240
-        height: 160
+        x: 684
+        y: 888
+        width: 66
+        height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9c798d086dbec87469e6a49bfdd7ee5f
-      internalID: 678463362
+      spriteID: fd47c3c3f91987d4fb0fd22dd242f41d
+      internalID: 1437319850
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32goose-spritesheet_11
+      name: bg-props_11
       rect:
         serializedVersion: 2
-        x: 240
-        y: 320
-        width: 240
-        height: 160
+        x: 786
+        y: 888
+        width: 66
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a6e1cb431ede21443bcc18db679d27e6
-      internalID: 1554341618
+      spriteID: dc80a886e286f9a42b2a6f169a6edd43
+      internalID: -1995402180
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32goose-spritesheet_12
+      name: bg-props_13
       rect:
         serializedVersion: 2
-        x: 480
-        y: 320
-        width: 240
-        height: 160
+        x: 870
+        y: 888
+        width: 84
+        height: 18
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 08badf5f903fedc4fa5a4be9e16672df
-      internalID: -710161652
+      spriteID: 0f6bc4c469ba0894baf1eee76c14a62a
+      internalID: 1184364359
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32goose-spritesheet_13
+      name: bg-props_14
       rect:
         serializedVersion: 2
-        x: 0
-        y: 160
-        width: 240
-        height: 160
+        x: 972
+        y: 888
+        width: 60
+        height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5fb68d503f9b3f9428012ac34230ec6c
-      internalID: -1251930468
+      spriteID: ad1b40dc03be759418ad476d8553bc8c
+      internalID: 22622247
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32goose-spritesheet_14
+      name: bg-props_15
       rect:
         serializedVersion: 2
-        x: 240
-        y: 160
-        width: 240
-        height: 160
+        x: 1056
+        y: 888
+        width: 96
+        height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c948f630a614c0d4186662f8e1caa8ee
-      internalID: -134572131
+      spriteID: 2941235402d7a4647ae961d39760dff3
+      internalID: 1905596888
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32goose-spritesheet_15
+      name: bg-props_16
       rect:
         serializedVersion: 2
-        x: 480
-        y: 160
-        width: 240
-        height: 160
+        x: 18
+        y: 24
+        width: 252
+        height: 456
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7c99c317ae21595429c176a53ea26041
-      internalID: 2074510208
+      spriteID: 2b062686c4334944a8e8822256d1cac5
+      internalID: -900962735
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32goose-spritesheet_16
+      name: bg-props_17
       rect:
         serializedVersion: 2
-        x: 720
-        y: 160
-        width: 240
-        height: 160
+        x: 1140
+        y: 24
+        width: 696
+        height: 690
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f90d2d863d60f3340aa5977e0e95acf0
-      internalID: 954145152
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 32goose-spritesheet_17
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 240
-        height: 160
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bc4602caf51fc22478015f1a4bc3c36a
-      internalID: 1352424415
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 32goose-spritesheet_18
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 0
-        width: 240
-        height: 160
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f9e75f131dd479341b9799c159bb6e64
-      internalID: 745301498
+      spriteID: 141b5774e2ed2694b9b8e462e9536b92
+      internalID: 1875156082
       vertices: []
       indices: 
       edges: []
@@ -519,25 +477,24 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      32goose-spritesheet_0: 115864878
-      32goose-spritesheet_1: -897086897
-      32goose-spritesheet_10: 678463362
-      32goose-spritesheet_11: 1554341618
-      32goose-spritesheet_12: -710161652
-      32goose-spritesheet_13: -1251930468
-      32goose-spritesheet_14: -134572131
-      32goose-spritesheet_15: 2074510208
-      32goose-spritesheet_16: 954145152
-      32goose-spritesheet_17: 1352424415
-      32goose-spritesheet_18: 745301498
-      32goose-spritesheet_2: 679421804
-      32goose-spritesheet_3: -861616009
-      32goose-spritesheet_4: 1291441118
-      32goose-spritesheet_5: 865125568
-      32goose-spritesheet_6: -170060078
-      32goose-spritesheet_7: 1329467458
-      32goose-spritesheet_8: -1097396480
-      32goose-spritesheet_9: 2027118510
+      bg-props_0: -1768351459
+      bg-props_1: 1169999926
+      bg-props_10: -1094953783
+      bg-props_11: -1336577031
+      bg-props_12: 1569428726
+      bg-props_13: -1357306597
+      bg-props_14: 1219609175
+      bg-props_15: -1537599703
+      bg-props_16: -445000584
+      bg-props_17: -1594045183
+      bg-props_2: 1437319850
+      bg-props_3: -1995402180
+      bg-props_4: -258053695
+      bg-props_5: 1184364359
+      bg-props_6: 22622247
+      bg-props_7: 1905596888
+      bg-props_8: -900962735
+      bg-props_9: 1875156082
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
