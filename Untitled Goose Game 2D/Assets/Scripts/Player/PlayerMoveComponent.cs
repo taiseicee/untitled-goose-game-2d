@@ -20,7 +20,6 @@ public class PlayerMoveComponent : MonoBehaviour {
     private float currentMaxSpeed;
     private Vector2 velocity;
     private Player player;
-    private Collider2D[] fallCollisionResults = new Collider2D[1];
      private bool canJump = false;
 
     public void Init(Player player) {
@@ -60,6 +59,7 @@ public class PlayerMoveComponent : MonoBehaviour {
     }
 
     public bool IsFalling() {
+        Collider2D[] fallCollisionResults = new Collider2D[1];
         int numCollisions = Physics2D.OverlapBox(
             groundCheckArea.position,
             groundCheckArea.localScale,
@@ -71,16 +71,20 @@ public class PlayerMoveComponent : MonoBehaviour {
     }
 
     public void SnapToGround() {
-        if (fallCollisionResults.Length < 1) return;
-        Vector2 groundSurface = Physics2D.ClosestPoint(
-            predictiveCollider.transform.position, 
-            fallCollisionResults[0]
+        RaycastHit2D[] raycastResults = new RaycastHit2D[1];
+        int numRaycastHits = Physics2D.CircleCast(
+            predictiveCollider.transform.position,
+            predictiveCollider.radius,
+            Vector2.down,
+            walkableFilter,
+            raycastResults,
+            predictiveCollider.radius * 2f
         );
-        player.transform.position = new Vector3(
-            player.transform.position.x, 
-            groundSurface.y, 
-            player.transform.position.z
-        );
+
+        if (numRaycastHits < 1) return;
+
+        player.transform.position += Vector3.down * raycastResults[0].distance;
+
         velocity.y = 0f;
         canJump = true;
     }
@@ -98,7 +102,7 @@ public class PlayerMoveComponent : MonoBehaviour {
             Vector2.down,
             collidableFilter,
             raycastResults,
-            predictiveCollider.radius * 2
+            predictiveCollider.radius * 2f
         );
 
         if (numRaycastHits <= 0) return;

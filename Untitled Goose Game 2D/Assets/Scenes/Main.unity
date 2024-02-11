@@ -17913,6 +17913,10 @@ PrefabInstance:
       propertyPath: playerSprite
       value: 
       objectReference: {fileID: 715500202}
+    - target: {fileID: 580342548598833573, guid: 881d0c1a0340230419961580d7261425, type: 3}
+      propertyPath: cameraMoveSpeed
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 897350847050660731, guid: 881d0c1a0340230419961580d7261425, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
