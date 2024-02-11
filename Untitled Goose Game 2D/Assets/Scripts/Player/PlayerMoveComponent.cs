@@ -20,7 +20,6 @@ public class PlayerMoveComponent : MonoBehaviour {
     private float currentMaxSpeed;
     private Vector2 velocity;
     private Player player;
-     private bool canJump = false;
 
     public void Init(Player player) {
         this.player = player;
@@ -51,10 +50,7 @@ public class PlayerMoveComponent : MonoBehaviour {
     }
 
     public void Jump() {
-        if (canJump) {
-            velocity.y += jumpInitialVelocity;
-            canJump = false;
-        }
+        velocity.y = jumpInitialVelocity;
         UpdatePosition();
     }
 
@@ -70,7 +66,16 @@ public class PlayerMoveComponent : MonoBehaviour {
         return numCollisions <= 0;
     }
 
-    public void SnapToGround() {
+    public bool IsJumping() {
+        return velocity.y > 0f;
+    }
+
+    public void LandAfterFall() {
+        SnapToGround();
+        velocity.y = 0f;
+    }
+
+    private void SnapToGround() {
         RaycastHit2D[] raycastResults = new RaycastHit2D[1];
         int numRaycastHits = Physics2D.CircleCast(
             predictiveCollider.transform.position,
@@ -84,9 +89,6 @@ public class PlayerMoveComponent : MonoBehaviour {
         if (numRaycastHits < 1) return;
 
         player.transform.position += Vector3.down * raycastResults[0].distance;
-
-        velocity.y = 0f;
-        canJump = true;
     }
 
     public bool IsMoving() {
@@ -98,7 +100,7 @@ public class PlayerMoveComponent : MonoBehaviour {
 
         int numRaycastHits = Physics2D.CircleCast(
             predictiveCollider.transform.position,
-            predictiveCollider.radius,
+            predictiveCollider.radius * 0.9f,
             Vector2.down,
             collidableFilter,
             raycastResults,
@@ -110,6 +112,7 @@ public class PlayerMoveComponent : MonoBehaviour {
         CalculateVelocity(input, raycastResults[0]);
 
         UpdatePosition();
+        SnapToGround();
         // CollideAndSlide(circleCastHitResults);
     }
 

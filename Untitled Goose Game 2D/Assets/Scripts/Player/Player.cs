@@ -7,7 +7,8 @@ public class Player : MonoBehaviour {
         Idle,
         Walk,
         Run, 
-        Fall
+        Fall,
+        Jump
     };
 
     [SerializeField] private State initialState = State.Idle;
@@ -39,28 +40,36 @@ public class Player : MonoBehaviour {
 
         switch (currentState) {
             case State.Idle:
-                HandleStateIdle(playerDirectionInput, shouldRun);
+                HandleStateIdle(playerDirectionInput, shouldRun, shouldJump);
                 break;
             case State.Walk:
-                HandleStateWalk(playerDirectionInput, shouldRun); 
+                HandleStateWalk(playerDirectionInput, shouldRun, shouldJump); 
                 break;
             case State.Run:
-                HandleStateRun(playerDirectionInput, shouldRun); 
+                HandleStateRun(playerDirectionInput, shouldRun, shouldJump); 
                 break;
             case State.Fall:
                 HandleStateFall(playerDirectionInput, shouldRun);
                 break;
+            case State.Jump:
+                HandleStateJump(playerDirectionInput);
+                break;
         }
 
-        if (shouldJump) HandleJump();
         if (shouldHonk) HandleHonk();
         playerSprite.flipX = direction < 0 ? true : false;
         ChangeCameraDirection();
     }
 
-    private void HandleStateIdle(float playerDirectionInput, bool shouldRun) {
+    private void HandleStateIdle(float playerDirectionInput, bool shouldRun, bool shouldJump) {
         if (moveComponent.IsFalling()) {
             ChangeState(State.Fall);
+            return;
+        }
+
+        if (shouldJump) {
+            moveComponent.Jump();
+            HandleStateJump(playerDirectionInput);
             return;
         }
         
@@ -74,9 +83,15 @@ public class Player : MonoBehaviour {
         ChangeState(State.Walk);
     }
 
-    private void HandleStateWalk(float playerDirectionInput, bool shouldRun) {
+    private void HandleStateWalk(float playerDirectionInput, bool shouldRun, bool shouldJump) {
         if (moveComponent.IsFalling()) {
             ChangeState(State.Fall);
+            return;
+        }
+
+        if (shouldJump) {
+            moveComponent.Jump();
+            HandleStateJump(playerDirectionInput);
             return;
         }
 
@@ -92,9 +107,15 @@ public class Player : MonoBehaviour {
         }
     }
 
-    private void HandleStateRun(float playerDirectionInput, bool shouldRun) {
+    private void HandleStateRun(float playerDirectionInput, bool shouldRun, bool shouldJump) {
         if (moveComponent.IsFalling()) {
             ChangeState(State.Fall);
+            return;
+        }
+
+        if (shouldJump) {
+            moveComponent.Jump();
+            HandleStateJump(playerDirectionInput);
             return;
         }
 
@@ -117,7 +138,7 @@ public class Player : MonoBehaviour {
             return;
         }
 
-        moveComponent.SnapToGround();
+        moveComponent.LandAfterFall();
 
         if (!moveComponent.IsMoving()) {
             ChangeState(State.Idle);
@@ -133,9 +154,12 @@ public class Player : MonoBehaviour {
         return;
     }
 
-    private void HandleJump() {
-        if (currentState == State.Fall) return;
-        moveComponent.Jump();
+    private void HandleStateJump(float playerDirectionInput) {
+        moveComponent.Fall(playerDirectionInput);
+        if (!moveComponent.IsJumping()) {
+            ChangeState(State.Fall);
+            return;
+        }
     }
 
     private void HandleHonk() {
