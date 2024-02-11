@@ -12,45 +12,60 @@ public class Player : MonoBehaviour {
 
     [SerializeField] private State initialState = State.Idle;
     [SerializeField] private PlayerMoveComponent moveComponent;
+    [SerializeField] private SpriteRenderer playerSprite;
+    [SerializeField] private Camera playerCamera;
+    [SerializeField, Range(0f, 1f)] private float cameraMoveSpeed = 0.05f;
     private State currentState;
     private PlayerInputActions playerInputActions;
+    private float direction = 1f;
+    private float CameraHorizontalOffset;
 
     private void Awake() {
         ChangeState(initialState);
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
         moveComponent.Init(this);
+
+        CameraHorizontalOffset = playerCamera.transform.localPosition.x;
     }
 
     private void Update() {
+        float playerDirectionInput = playerInputActions.Player.Move.ReadValue<float>();
+        bool shouldRun = playerInputActions.Player.Run.ReadValue<float>() != 0f;
+        bool shouldJump = playerInputActions.Player.Jump.ReadValue<float>() != 0f;
+        bool shouldHonk = playerInputActions.Player.Honk.ReadValue<float>() != 0f;
+
+        direction = playerDirectionInput == 0f ? direction : playerDirectionInput / Mathf.Abs(playerDirectionInput);
+
         switch (currentState) {
             case State.Idle:
-                HandleStateIdle();
+                HandleStateIdle(playerDirectionInput, shouldRun);
                 break;
             case State.Walk:
-                HandleStateWalk(); 
+                HandleStateWalk(playerDirectionInput, shouldRun); 
                 break;
             case State.Run:
-                HandleStateRun(); 
+                HandleStateRun(playerDirectionInput, shouldRun); 
                 break;
             case State.Fall:
-                HandleStateFall();
+                HandleStateFall(playerDirectionInput, shouldRun);
                 break;
         }
 
-        HandleJump();
-        HandleHonk();
+        if (shouldJump) HandleJump();
+        if (shouldHonk) HandleHonk();
+        playerSprite.flipX = direction < 0 ? true : false;
+        ChangeCameraDirection();
     }
 
-    private void HandleStateIdle() {
+    private void HandleStateIdle(float playerDirectionInput, bool shouldRun) {
         if (moveComponent.IsFalling()) {
             ChangeState(State.Fall);
             return;
         }
-        float playerDirectionInput = playerInputActions.Player.Move.ReadValue<float>();
+        
         if (playerDirectionInput == 0f) return;
 
-        bool shouldRun = playerInputActions.Player.Run.ReadValue<float>() != 0f;
         if (shouldRun) {
             ChangeState(State.Run);
             return;
@@ -59,19 +74,17 @@ public class Player : MonoBehaviour {
         ChangeState(State.Walk);
     }
 
-    private void HandleStateWalk() {
+    private void HandleStateWalk(float playerDirectionInput, bool shouldRun) {
         if (moveComponent.IsFalling()) {
             ChangeState(State.Fall);
             return;
         }
 
-        bool shouldRun = playerInputActions.Player.Run.ReadValue<float>() != 0f;
         if (shouldRun) {
             ChangeState(State.Run);
             return;
         }
 
-        float playerDirectionInput = playerInputActions.Player.Move.ReadValue<float>();
         moveComponent.Walk(playerDirectionInput);
         if (!moveComponent.IsMoving()) {
             ChangeState(State.Idle);
@@ -79,30 +92,27 @@ public class Player : MonoBehaviour {
         }
     }
 
-    private void HandleStateRun() {
+    private void HandleStateRun(float playerDirectionInput, bool shouldRun) {
         if (moveComponent.IsFalling()) {
             ChangeState(State.Fall);
             return;
         }
 
-        bool shouldRun = playerInputActions.Player.Run.ReadValue<float>() != 0f;
         if (!shouldRun) {
             ChangeState(State.Walk);
             return;
         }
 
-        float playerDirectionInput = playerInputActions.Player.Move.ReadValue<float>();
         moveComponent.Run(playerDirectionInput);
-        
+
         if (!moveComponent.IsMoving()) {
             ChangeState(State.Idle);
             return;
         }
     }
 
-    private void HandleStateFall() {
+    private void HandleStateFall(float playerDirectionInput, bool shouldRun) {
         if (moveComponent.IsFalling()) {
-            float playerDirectionInput = playerInputActions.Player.Move.ReadValue<float>();
             moveComponent.Fall(playerDirectionInput);
             return;
         }
@@ -114,7 +124,6 @@ public class Player : MonoBehaviour {
             return;
         }
 
-        bool shouldRun = playerInputActions.Player.Run.ReadValue<float>() != 0f;
         if (shouldRun) {
             ChangeState(State.Run);
             return;
@@ -125,14 +134,25 @@ public class Player : MonoBehaviour {
     }
 
     private void HandleJump() {
-        if (moveComponent.IsFalling()) return;
-        if (playerInputActions.Player.Jump.ReadValue<float>() == 0f) return;
+        if (currentState == State.Fall) return;
         moveComponent.Jump();
     }
 
     private void HandleHonk() {
-        if (playerInputActions.Player.Honk.ReadValue<float>() == 0f) return;
         print("HONK!");
+    }
+
+    private void ChangeCameraDirection() {
+        float newCameraHorizontalOffset = Mathf.MoveTowards(
+            playerCamera.transform.localPosition.x, 
+            direction * CameraHorizontalOffset, 
+            cameraMoveSpeed
+        );
+        playerCamera.transform.localPosition = new Vector3(
+            newCameraHorizontalOffset,
+            playerCamera.transform.localPosition.y,
+            playerCamera.transform.localPosition.z
+        );
     }
 
     private void ChangeState(State toState) {

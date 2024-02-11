@@ -9,7 +9,7 @@ public class PlayerMoveComponent : MonoBehaviour {
     [SerializeField, Range(0f, 30f)] private float maxRunSpeed = 10f;
     [SerializeField, Range(0f, 30f)] private float maxFallSpeed = 3f;
     [SerializeField, Range(0f, 25f)] private float maxAcceleration = 12f;
-    [SerializeField, Range(0f, 100f)] private float jumpInitialVelocity = 8f;
+    [SerializeField, Range(0f, 50f)] private float jumpInitialVelocity = 8f;
     [SerializeField, Range(0f, 1f)] private float gravityMultiplier = 0.2f;
     [SerializeField, Range(0f, 90f)] private float maxWalkableAngle = 60f;
     [SerializeField] private Transform groundCheckArea;

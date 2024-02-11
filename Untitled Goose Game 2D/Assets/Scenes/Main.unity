@@ -5244,6 +5244,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 504248354}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &715500202 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 8226581135232125254, guid: 881d0c1a0340230419961580d7261425, type: 3}
+  m_PrefabInstance: {fileID: 5322017357549146630}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &774532315 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7939956016825496079, guid: 881d0c1a0340230419961580d7261425, type: 3}
@@ -17900,6 +17905,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 580342548598833573, guid: 881d0c1a0340230419961580d7261425, type: 3}
+      propertyPath: playerCamera
+      value: 
+      objectReference: {fileID: 519420031}
+    - target: {fileID: 580342548598833573, guid: 881d0c1a0340230419961580d7261425, type: 3}
+      propertyPath: playerSprite
+      value: 
+      objectReference: {fileID: 715500202}
     - target: {fileID: 897350847050660731, guid: 881d0c1a0340230419961580d7261425, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
