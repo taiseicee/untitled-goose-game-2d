@@ -14,7 +14,7 @@ public class PlayerMoveComponent : MonoBehaviour {
     [SerializeField, Range(0f, 90f)] private float maxWalkableAngle = 60f;
     [SerializeField] private Transform groundCheckArea;
     [SerializeField] private ContactFilter2D walkableFilter;
-    [SerializeField] private Transform predictiveCollider;
+    [SerializeField] private CircleCollider2D predictiveCollider;
     [SerializeField] private ContactFilter2D collidableFilter;
 
     private float currentMaxSpeed;
@@ -29,12 +29,12 @@ public class PlayerMoveComponent : MonoBehaviour {
 
     public void Walk(float input) {
         currentMaxSpeed = maxWalkSpeed;
-        CollideAndSlide(input);
+        Slide(input);
     }
 
     public void Run(float input) {
         currentMaxSpeed = maxRunSpeed;
-        CollideAndSlide(input);
+        Slide(input);
     }
 
     public void Fall(float input) {
@@ -43,7 +43,11 @@ public class PlayerMoveComponent : MonoBehaviour {
         else 
             velocity += Physics2D.gravity * gravityMultiplier * Time.deltaTime;
         currentMaxSpeed = maxFallSpeed;
-        CalculateVelocity(input);
+        
+        Vector2 desiredVelocity = new Vector2(input, 0f) * currentMaxSpeed;
+        float maxSpeedChange = maxAcceleration * Time.deltaTime;
+        velocity.x = Mathf.MoveTowards(velocity.x, desiredVelocity.x, maxSpeedChange);
+        
         UpdatePosition();
     }
 
@@ -85,49 +89,90 @@ public class PlayerMoveComponent : MonoBehaviour {
         return velocity != Vector2.zero;
     }
 
-    private void CollideAndSlide(float input) {
-        CalculateVelocity(input);
+    private void Slide(float input) {
 
-        RaycastHit2D[] circleCastHitResults = new RaycastHit2D[1];
-
-        int numCircleCastHitResults = Physics2D.CircleCast(
-            predictiveCollider.transform.position,
-            predictiveCollider.localScale.x/2.1f,
-            velocity.normalized,
-            collidableFilter,
-            circleCastHitResults,
-            velocity.magnitude * Time.deltaTime
-        );
+        // RaycastHit2D[] circleCastResults = new RaycastHit2D[1];
+        // int numCircleCastResults = Physics2D.CircleCast(
+        //     predictiveCollider.transform.position,
+        //     predictiveCollider.radius,
+        //     velocity.normalized,
+        //     collidableFilter,
+        //     circleCastResults,
+        //     velocity.magnitude * Time.deltaTime
+        // );
         
-        bool didCollide = numCircleCastHitResults > 0;
-        if (!didCollide) {
-            UpdatePosition();
-            return;
-        }
+        // bool didCollide = numCircleCastResults > 0;
+        // if (didCollide) {
+        //     bool isAscent = velocity.x * circleCastResults[0].normal.x >= 0;
+        //     float hitAngle = Vector2.Angle(Vector2.up, circleCastResults[0].normal);
+        //     // hitAngle > maxWalkableAngle
+        //     if (isAscent) {
+        //         velocity = Vector2.zero;
+        //         return;
+        //     }
+        // }
 
-        float hitAngle = Mathf.Abs(90 - Vector2.Angle(Vector2.up, circleCastHitResults[0].normal));
+        RaycastHit2D[] raycastResults = new RaycastHit2D[1];
+        // int numRaycastHits = Physics2D.Raycast(
+        //     groundCheckArea.position,
+        //     Vector2.down,
+        //     walkableFilter,
+        //     raycastResults,
+        //     groundCheckArea.localScale.y
+        // );
+
+        int numRaycastHits = Physics2D.CircleCast(
+            predictiveCollider.transform.position,
+            predictiveCollider.radius,
+            Vector2.down,
+            collidableFilter,
+            raycastResults,
+            predictiveCollider.radius * 2
+        );
+
+        print(Vector2.Angle(Vector2.up, raycastResults[0].normal));
+
+        if (numRaycastHits <= 0) return;
+
+        CalculateVelocity(input, raycastResults[0]);
+
+        UpdatePosition();
+        // CollideAndSlide(circleCastHitResults);
+    }
+
+    private void CollideAndSlide(RaycastHit2D[] hitResults) {
+        // Interpretation of Kasper Fauerby's Improved Collision detection and Response
+        float hitAngle = Mathf.Abs(90 - Vector2.Angle(Vector2.up, hitResults[0].normal));
         if (hitAngle > maxWalkableAngle) {
             velocity.x = 0;
             UpdatePosition();
             return;
         }
 
-        Vector2 reducedVelocity = circleCastHitResults[0].fraction * velocity;
+        Vector2 reducedVelocity = hitResults[0].fraction * velocity;
         Vector2 remainingVelocity = velocity - reducedVelocity;
-        Vector2 hitTangential = Vector2.Perpendicular(circleCastHitResults[0].normal);
+        Vector2 hitTangential = Vector2.Perpendicular(hitResults[0].normal);
         // hitTangential's magnitude is essentially 1f
         Vector2 projectedVelocity = Vector2.Dot(remainingVelocity, hitTangential) * hitTangential;
 
-        velocity = reducedVelocity + projectedVelocity;
+        velocity = reducedVelocity + projectedVelocity.normalized * remainingVelocity.magnitude;
         UpdatePosition();
     }
 
-    private void CalculateVelocity(float input) {
-        Vector2 desiredVelocity = new Vector2(input, 0f) * currentMaxSpeed;
-
+    private void CalculateVelocity(float input, RaycastHit2D raycastResult) {
+        Vector2 desiredVelocity = new Vector2(input, 0f);
         float maxSpeedChange = maxAcceleration * Time.deltaTime;
 
+        Vector2 hitTangential = Vector2.Perpendicular(raycastResult.normal);
+
+        Vector2 desiredVelocityProjected = Vector2.Dot(desiredVelocity, hitTangential) * hitTangential;
+        desiredVelocity = desiredVelocityProjected.normalized * currentMaxSpeed;
+
+        Vector2 velocityProjected = Vector2.Dot(velocity, hitTangential) * hitTangential;
+        velocity = velocityProjected.normalized * velocity.magnitude;
+
         velocity.x = Mathf.MoveTowards(velocity.x, desiredVelocity.x, maxSpeedChange);
+        velocity.y = Mathf.MoveTowards(velocity.y, desiredVelocity.y, maxSpeedChange);
     }
 
     private void UpdatePosition() {
