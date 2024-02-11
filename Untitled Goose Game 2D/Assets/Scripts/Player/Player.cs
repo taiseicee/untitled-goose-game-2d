@@ -31,6 +31,7 @@ public class Player : MonoBehaviour {
                 HandleStateWalk(); 
                 break;
             case State.Run:
+                // HandleStateRun(); 
                 break;
             case State.Fall:
                 HandleStateFall();
@@ -46,7 +47,11 @@ public class Player : MonoBehaviour {
             return;
         }
         float playerDirectionInput = playerInputActions.Player.Move.ReadValue<float>();
-        if (playerDirectionInput != 0) ChangeState(State.Walk);
+        if (playerDirectionInput == 0f) return;
+
+        // bool shouldRun = playerInputActions.Player.Run.ReadValue<bool>();
+
+        ChangeState(State.Walk);
     }
 
     private void HandleStateWalk() {
@@ -62,7 +67,21 @@ public class Player : MonoBehaviour {
         }
     }
 
+    private void HandleStateRun() {
+        if (moveComponent.IsFalling()) {
+            ChangeState(State.Fall);
+            return;
+        }
+        float playerDirectionInput = playerInputActions.Player.Move.ReadValue<float>();
+        moveComponent.Run(playerDirectionInput);
+        if (!moveComponent.IsMoving()) {
+            ChangeState(State.Idle);
+            return;
+        }
+    }
+
     private void HandleStateFall() {
+
         if (!moveComponent.IsFalling() && moveComponent.IsMoving()) {
             moveComponent.SnapToGround();
             ChangeState(State.Walk);

@@ -90,36 +90,7 @@ public class PlayerMoveComponent : MonoBehaviour {
     }
 
     private void Slide(float input) {
-
-        // RaycastHit2D[] circleCastResults = new RaycastHit2D[1];
-        // int numCircleCastResults = Physics2D.CircleCast(
-        //     predictiveCollider.transform.position,
-        //     predictiveCollider.radius,
-        //     velocity.normalized,
-        //     collidableFilter,
-        //     circleCastResults,
-        //     velocity.magnitude * Time.deltaTime
-        // );
-        
-        // bool didCollide = numCircleCastResults > 0;
-        // if (didCollide) {
-        //     bool isAscent = velocity.x * circleCastResults[0].normal.x >= 0;
-        //     float hitAngle = Vector2.Angle(Vector2.up, circleCastResults[0].normal);
-        //     // hitAngle > maxWalkableAngle
-        //     if (isAscent) {
-        //         velocity = Vector2.zero;
-        //         return;
-        //     }
-        // }
-
         RaycastHit2D[] raycastResults = new RaycastHit2D[1];
-        // int numRaycastHits = Physics2D.Raycast(
-        //     groundCheckArea.position,
-        //     Vector2.down,
-        //     walkableFilter,
-        //     raycastResults,
-        //     groundCheckArea.localScale.y
-        // );
 
         int numRaycastHits = Physics2D.CircleCast(
             predictiveCollider.transform.position,
@@ -129,8 +100,6 @@ public class PlayerMoveComponent : MonoBehaviour {
             raycastResults,
             predictiveCollider.radius * 2
         );
-
-        print(Vector2.Angle(Vector2.up, raycastResults[0].normal));
 
         if (numRaycastHits <= 0) return;
 
