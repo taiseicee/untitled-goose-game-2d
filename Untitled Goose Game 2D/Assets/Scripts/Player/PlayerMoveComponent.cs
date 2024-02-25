@@ -20,6 +20,8 @@ public class PlayerMoveComponent : MonoBehaviour {
     private float currentMaxSpeed;
     private Vector2 velocity;
     private Player player;
+    private float snapBuffer = 0.01f;
+    private int maxCollideAndSlideDepth = 3;
 
     public void Init(Player player) {
         this.player = player;
@@ -88,7 +90,7 @@ public class PlayerMoveComponent : MonoBehaviour {
 
         if (numRaycastHits < 1) return;
 
-        player.transform.position += Vector3.down * raycastResults[0].distance;
+        player.transform.position += Vector3.down * (raycastResults[0].distance - snapBuffer);
     }
 
     public bool IsMoving() {
@@ -96,59 +98,58 @@ public class PlayerMoveComponent : MonoBehaviour {
     }
 
     private void Slide(float input) {
-        RaycastHit2D[] raycastResults = new RaycastHit2D[1];
+        CalculateVelocity(input);
 
-        int numRaycastHits = Physics2D.CircleCast(
-            predictiveCollider.transform.position,
-            predictiveCollider.radius * 0.9f,
-            Vector2.down,
-            collidableFilter,
-            raycastResults,
-            predictiveCollider.radius * 2f
-        );
-
-        if (numRaycastHits <= 0) return;
-
-        CalculateVelocity(input, raycastResults[0]);
-
-        UpdatePosition();
+        Vector2 positionChange = CollideAndSlide(velocity * Time.deltaTime, predictiveCollider.transform.position);
+        Vector3 displacement = new Vector3(positionChange.x, positionChange.y, 0f);
+        player.transform.position += displacement;
         SnapToGround();
-        // CollideAndSlide(circleCastHitResults);
     }
 
-    private void CollideAndSlide(RaycastHit2D[] hitResults) {
-        // Interpretation of Kasper Fauerby's Improved Collision detection and Response
-        float hitAngle = Mathf.Abs(90 - Vector2.Angle(Vector2.up, hitResults[0].normal));
-        if (hitAngle > maxWalkableAngle) {
-            velocity.x = 0;
-            UpdatePosition();
-            return;
+    private Vector2 CollideAndSlide(Vector2 positionChange, Vector3 startPosition, int depth = 0) {
+        if (positionChange == Vector2.zero) return Vector2.zero;
+        if (depth >= maxCollideAndSlideDepth) return Vector2.zero;
+
+        RaycastHit2D[] raycastResults = new RaycastHit2D[1];
+        int numRaycastHits = Physics2D.CircleCast(
+            startPosition,
+            predictiveCollider.radius,
+            positionChange.normalized,
+            collidableFilter,
+            raycastResults,
+            positionChange.magnitude + snapBuffer
+        );
+
+        if (numRaycastHits == 0) return positionChange;
+
+        Vector2 reducedVelocity = (raycastResults[0].distance - snapBuffer) * positionChange.normalized;
+
+        float hitAngle = Vector2.Angle(Vector2.up, raycastResults[0].normal);
+        bool didHitSteepSlope = hitAngle > maxWalkableAngle;
+        if (didHitSteepSlope) {
+            velocity = Vector2.zero;
+            return reducedVelocity;
         }
 
-        Vector2 reducedVelocity = hitResults[0].fraction * velocity;
-        Vector2 remainingVelocity = velocity - reducedVelocity;
-        Vector2 hitTangential = Vector2.Perpendicular(hitResults[0].normal);
+        Vector2 remainingVelocity = positionChange - reducedVelocity;
+        Vector2 hitTangential = Vector2.Perpendicular(raycastResults[0].normal);
         // hitTangential's magnitude is essentially 1f
         Vector2 projectedVelocity = Vector2.Dot(remainingVelocity, hitTangential) * hitTangential;
 
-        velocity = reducedVelocity + projectedVelocity.normalized * remainingVelocity.magnitude;
-        UpdatePosition();
+        Vector3 updatedPosition = new Vector3(
+            startPosition.x + reducedVelocity.x,
+            startPosition.y + reducedVelocity.y,
+            startPosition.z
+        );
+        return reducedVelocity + CollideAndSlide(projectedVelocity, updatedPosition, depth + 1);
     }
 
-    private void CalculateVelocity(float input, RaycastHit2D raycastResult) {
-        Vector2 desiredVelocity = new Vector2(input, 0f);
-        float maxSpeedChange = maxAcceleration * Time.deltaTime;
+    private void CalculateVelocity(float input) {
+        Vector2 desiredVelocity = new Vector2(input, 0f) * currentMaxSpeed;
+        float speedChange = maxAcceleration * Time.deltaTime;
 
-        Vector2 hitTangential = Vector2.Perpendicular(raycastResult.normal);
-
-        Vector2 desiredVelocityProjected = Vector2.Dot(desiredVelocity, hitTangential) * hitTangential;
-        desiredVelocity = desiredVelocityProjected.normalized * currentMaxSpeed;
-
-        Vector2 velocityProjected = Vector2.Dot(velocity, hitTangential) * hitTangential;
-        velocity = velocityProjected.normalized * velocity.magnitude;
-
-        velocity.x = Mathf.MoveTowards(velocity.x, desiredVelocity.x, maxSpeedChange);
-        velocity.y = Mathf.MoveTowards(velocity.y, desiredVelocity.y, maxSpeedChange);
+        velocity.x = Mathf.MoveTowards(velocity.x, desiredVelocity.x, speedChange);
+        velocity.y = Mathf.MoveTowards(velocity.y, desiredVelocity.y, speedChange);
     }
 
     private void UpdatePosition() {

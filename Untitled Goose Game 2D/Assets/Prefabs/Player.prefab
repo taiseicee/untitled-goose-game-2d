@@ -50,6 +50,7 @@ MonoBehaviour:
   maxAcceleration: 10
   jumpInitialVelocity: 10
   gravityMultiplier: 0.5
+  maxWalkableAngle: 60
   groundCheckArea: {fileID: 1595658045059004529}
   walkableFilter:
     useTriggers: 0
@@ -80,6 +81,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  snapBuffer: 0.01
 --- !u!1 &5513920434869533054
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,6 +322,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialState: 0
   moveComponent: {fileID: 6379548242918822028}
+  playerSprite: {fileID: 0}
+  playerCamera: {fileID: 0}
+  cameraMoveSpeed: 0.05
 --- !u!1 &8957967986810213465
 GameObject:
   m_ObjectHideFlags: 0
