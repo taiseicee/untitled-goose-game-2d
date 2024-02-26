@@ -12,6 +12,7 @@ public class PlayerMoveComponent : MonoBehaviour {
     [SerializeField, Range(0f, 50f)] private float jumpInitialVelocity = 8f;
     [SerializeField, Range(0f, 1f)] private float gravityMultiplier = 0.2f;
     [SerializeField, Range(0f, 90f)] private float maxWalkableAngle = 60f;
+    [SerializeField] private Rect allowedArea = new Rect(-9f, -9f, 127f, 22f);
     [SerializeField] private Transform groundCheckArea;
     [SerializeField] private ContactFilter2D walkableFilter;
     [SerializeField] private CircleCollider2D predictiveCollider;
@@ -25,6 +26,10 @@ public class PlayerMoveComponent : MonoBehaviour {
 
     public void Init(Player player) {
         this.player = player;
+        allowedArea.x += predictiveCollider.radius;
+        allowedArea.y += predictiveCollider.radius;
+        allowedArea.width -= predictiveCollider.radius * 2f;
+        allowedArea.height -= predictiveCollider.radius * 2f;
     }
 
     public void Walk(float input) {
@@ -102,7 +107,12 @@ public class PlayerMoveComponent : MonoBehaviour {
 
         Vector2 positionChange = CollideAndSlide(velocity * Time.deltaTime, predictiveCollider.transform.position);
         Vector3 displacement = new Vector3(positionChange.x, positionChange.y, 0f);
-        player.transform.position += displacement;
+        Vector3 updatedPosition = player.transform.position + displacement;
+        if (!allowedArea.Contains(updatedPosition)) {
+            velocity = Vector2.zero;
+            updatedPosition = player.transform.position;
+        }
+        player.transform.position = updatedPosition;
         SnapToGround();
     }
 
