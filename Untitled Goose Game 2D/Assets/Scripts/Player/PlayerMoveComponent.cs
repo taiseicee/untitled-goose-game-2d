@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMoveComponent : MonoBehaviour {
@@ -12,7 +9,7 @@ public class PlayerMoveComponent : MonoBehaviour {
     [SerializeField, Range(0f, 50f)] private float jumpInitialVelocity = 8f;
     [SerializeField, Range(0f, 1f)] private float gravityMultiplier = 0.2f;
     [SerializeField, Range(0f, 90f)] private float maxWalkableAngle = 60f;
-    [SerializeField] private Rect allowedArea = new Rect(-9f, -9f, 127f, 22f);
+    [SerializeField] private Transform worldBounds;
     [SerializeField] private Transform groundCheckArea;
     [SerializeField] private ContactFilter2D walkableFilter;
     [SerializeField] private CircleCollider2D predictiveCollider;
@@ -23,13 +20,19 @@ public class PlayerMoveComponent : MonoBehaviour {
     private Player player;
     private float snapBuffer = 0.01f;
     private int maxCollideAndSlideDepth = 3;
+    private Rect allowedArea;
+
+    private void Awake() {
+        allowedArea = new Rect(
+            worldBounds.position.x + predictiveCollider.radius - worldBounds.localScale.x / 2f,
+            worldBounds.position.y + predictiveCollider.radius - worldBounds.localScale.y / 2f,
+            worldBounds.localScale.x - predictiveCollider.radius * 2f,
+            worldBounds.localScale.y - predictiveCollider.radius * 2f
+        );
+    }
 
     public void Init(Player player) {
         this.player = player;
-        allowedArea.x += predictiveCollider.radius;
-        allowedArea.y += predictiveCollider.radius;
-        allowedArea.width -= predictiveCollider.radius * 2f;
-        allowedArea.height -= predictiveCollider.radius * 2f;
     }
 
     public void Walk(float input) {
@@ -52,13 +55,14 @@ public class PlayerMoveComponent : MonoBehaviour {
         Vector2 desiredVelocity = new Vector2(input, 0f) * currentMaxSpeed;
         float maxSpeedChange = maxAcceleration * Time.deltaTime;
         velocity.x = Mathf.MoveTowards(velocity.x, desiredVelocity.x, maxSpeedChange);
-        
-        UpdatePosition();
+        Vector2 positionChange = velocity * Time.deltaTime;
+        UpdatePosition(positionChange);
     }
 
     public void Jump() {
         velocity.y = jumpInitialVelocity;
-        UpdatePosition();
+        Vector2 positionChange = velocity * Time.deltaTime;
+        UpdatePosition(positionChange);
     }
 
     public bool IsFalling() {
@@ -106,13 +110,7 @@ public class PlayerMoveComponent : MonoBehaviour {
         CalculateVelocity(input);
 
         Vector2 positionChange = CollideAndSlide(velocity * Time.deltaTime, predictiveCollider.transform.position);
-        Vector3 displacement = new Vector3(positionChange.x, positionChange.y, 0f);
-        Vector3 updatedPosition = player.transform.position + displacement;
-        if (!allowedArea.Contains(updatedPosition)) {
-            velocity = Vector2.zero;
-            updatedPosition = player.transform.position;
-        }
-        player.transform.position = updatedPosition;
+        UpdatePosition(positionChange);
         SnapToGround();
     }
 
@@ -162,8 +160,13 @@ public class PlayerMoveComponent : MonoBehaviour {
         velocity.y = Mathf.MoveTowards(velocity.y, desiredVelocity.y, speedChange);
     }
 
-    private void UpdatePosition() {
-        Vector3 displacement = new Vector3(velocity.x, velocity.y, 0f) * Time.deltaTime;
-        player.transform.position += displacement;
+    private void UpdatePosition(Vector2 positionChange) {
+        Vector3 displacement = new Vector3(positionChange.x, positionChange.y, 0f);
+        Vector3 updatedPosition = player.transform.position + displacement;
+        if (!allowedArea.Contains(updatedPosition)) {
+            velocity.x = 0f;
+            updatedPosition.x = player.transform.position.x;
+        }
+        player.transform.position = updatedPosition;
     }
 }

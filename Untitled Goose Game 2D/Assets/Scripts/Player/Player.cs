@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
@@ -14,20 +13,16 @@ public class Player : MonoBehaviour {
     [SerializeField] private State initialState = State.Idle;
     [SerializeField] private PlayerMoveComponent moveComponent;
     [SerializeField] private SpriteRenderer playerSprite;
-    [SerializeField] private Camera playerCamera;
-    [SerializeField, Range(0f, 1f)] private float cameraMoveSpeed = 0.05f;
+    [SerializeField] private PlayerCamera playerCamera;
     private State currentState;
     private PlayerInputActions playerInputActions;
     private float direction = 1f;
-    private float CameraHorizontalOffset;
 
     private void Awake() {
         ChangeState(initialState);
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
         moveComponent.Init(this);
-
-        CameraHorizontalOffset = playerCamera.transform.localPosition.x;
     }
 
     private void Update() {
@@ -57,8 +52,8 @@ public class Player : MonoBehaviour {
         }
 
         if (shouldHonk) HandleHonk();
-        playerSprite.flipX = direction < 0 ? true : false;
-        ChangeCameraDirection();
+        playerSprite.flipX = direction < 0f ? true : false;
+        playerCamera.SetDirection(direction);
     }
 
     private void HandleStateIdle(float playerDirectionInput, bool shouldRun, bool shouldJump) {
@@ -164,19 +159,6 @@ public class Player : MonoBehaviour {
 
     private void HandleHonk() {
         print("HONK!");
-    }
-
-    private void ChangeCameraDirection() {
-        float newCameraHorizontalOffset = Mathf.MoveTowards(
-            playerCamera.transform.localPosition.x, 
-            direction * CameraHorizontalOffset, 
-            cameraMoveSpeed
-        );
-        playerCamera.transform.localPosition = new Vector3(
-            newCameraHorizontalOffset,
-            playerCamera.transform.localPosition.y,
-            playerCamera.transform.localPosition.z
-        );
     }
 
     private void ChangeState(State toState) {
