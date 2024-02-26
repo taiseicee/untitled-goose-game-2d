@@ -9,7 +9,7 @@ public class PlayerMoveComponent : MonoBehaviour {
     [SerializeField, Range(0f, 50f)] private float jumpInitialVelocity = 8f;
     [SerializeField, Range(0f, 1f)] private float gravityMultiplier = 0.2f;
     [SerializeField, Range(0f, 90f)] private float maxWalkableAngle = 60f;
-    [SerializeField] private Transform worldBounds;
+    [SerializeField] private SpriteRenderer worldBoundsObject;
     [SerializeField] private Transform groundCheckArea;
     [SerializeField] private ContactFilter2D walkableFilter;
     [SerializeField] private CircleCollider2D predictiveCollider;
@@ -23,11 +23,16 @@ public class PlayerMoveComponent : MonoBehaviour {
     private Rect allowedArea;
 
     private void Awake() {
+        Bounds worldBounds = worldBoundsObject.bounds;
+
+        float WorldBoundsLength = worldBounds.max.x - worldBounds.min.x;
+        float WorldBoundsHeight = worldBounds.max.y - worldBounds.min.y;
+
         allowedArea = new Rect(
-            worldBounds.position.x + predictiveCollider.radius - worldBounds.localScale.x / 2f,
-            worldBounds.position.y + predictiveCollider.radius - worldBounds.localScale.y / 2f,
-            worldBounds.localScale.x - predictiveCollider.radius * 2f,
-            worldBounds.localScale.y - predictiveCollider.radius * 2f
+            worldBounds.min.x + predictiveCollider.radius,
+            worldBounds.min.y + predictiveCollider.radius,
+            WorldBoundsLength - predictiveCollider.radius * 2f,
+            WorldBoundsHeight - predictiveCollider.radius * 2f
         );
     }
 

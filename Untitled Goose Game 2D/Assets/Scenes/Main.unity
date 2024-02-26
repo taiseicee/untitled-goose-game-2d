@@ -5079,6 +5079,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5160,6 +5161,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 774532315}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaaf0fe4276f6a740874033729418bd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraMoveSpeed: 0.05
+  worldBoundsObject: {fileID: 1408125132}
 --- !u!1 &638898645
 GameObject:
   m_ObjectHideFlags: 0
@@ -6689,7 +6704,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1408125131}
   - component: {fileID: 1408125132}
-  - component: {fileID: 1408125133}
   m_Layer: 0
   m_Name: WorldBounds
   m_TagString: Untagged
@@ -6764,18 +6778,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1408125133
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1408125130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 585423cdd54c963449dee6821a876d74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1436398158
 GameObject:
   m_ObjectHideFlags: 0
@@ -18178,7 +18180,7 @@ PrefabInstance:
     - target: {fileID: 580342548598833573, guid: 881d0c1a0340230419961580d7261425, type: 3}
       propertyPath: playerCamera
       value: 
-      objectReference: {fileID: 519420031}
+      objectReference: {fileID: 519420033}
     - target: {fileID: 580342548598833573, guid: 881d0c1a0340230419961580d7261425, type: 3}
       propertyPath: playerSprite
       value: 
@@ -18267,6 +18269,10 @@ PrefabInstance:
       propertyPath: allowedArea.width
       value: 127
       objectReference: {fileID: 0}
+    - target: {fileID: 6379548242918822028, guid: 881d0c1a0340230419961580d7261425, type: 3}
+      propertyPath: worldBoundsObject
+      value: 
+      objectReference: {fileID: 1408125132}
     - target: {fileID: 6379548242918822028, guid: 881d0c1a0340230419961580d7261425, type: 3}
       propertyPath: allowedArea.height
       value: 22
