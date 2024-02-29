@@ -128,7 +128,7 @@ public class Player : MonoBehaviour {
     }
 
     private void HandleStateFall(float playerDirectionInput, bool shouldRun) {
-        if (moveComponent.IsFalling()) {
+        if (moveComponent.IsFalling()|| moveComponent.IsJumping()) {
             moveComponent.Fall(playerDirectionInput);
             return;
         }
