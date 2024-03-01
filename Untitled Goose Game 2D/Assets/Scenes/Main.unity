@@ -6802,6 +6802,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7166952355389699742, guid: 89d13c1948f9358469ed42ed60b308cd, type: 3}
   m_PrefabInstance: {fileID: 2137994449}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1050839187 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6250215974660950515, guid: 881d0c1a0340230419961580d7261425, type: 3}
+  m_PrefabInstance: {fileID: 5322017357549146630}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1081405656
 GameObject:
   m_ObjectHideFlags: 0
@@ -16323,27 +16328,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7508480069659674932, guid: 881d0c1a0340230419961580d7261425, type: 3}
   m_PrefabInstance: {fileID: 5322017357549146630}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &1646590978
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1646590976}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!81 &1646590979
 AudioListener:
   m_ObjectHideFlags: 0
@@ -17517,7 +17501,7 @@ MonoBehaviour:
   initialState: 0
   alertArea: {fileID: 698927546}
   boyAnimator: {fileID: 1314540217}
-  player: {fileID: 0}
+  player: {fileID: 5322017357549146631}
   alertFilter:
     useTriggers: 0
     useLayerMask: 1
@@ -18094,7 +18078,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7079025779098075768, guid: 89d13c1948f9358469ed42ed60b308cd, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7166952355389699742, guid: 89d13c1948f9358469ed42ed60b308cd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18482,7 +18466,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7079025779098075768, guid: 89d13c1948f9358469ed42ed60b308cd, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7166952355389699742, guid: 89d13c1948f9358469ed42ed60b308cd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18553,6 +18537,10 @@ PrefabInstance:
       propertyPath: playerSprite
       value: 
       objectReference: {fileID: 715500202}
+    - target: {fileID: 580342548598833573, guid: 881d0c1a0340230419961580d7261425, type: 3}
+      propertyPath: playerAnimator
+      value: 
+      objectReference: {fileID: 1050839187}
     - target: {fileID: 580342548598833573, guid: 881d0c1a0340230419961580d7261425, type: 3}
       propertyPath: cameraMoveSpeed
       value: 0.05
@@ -18775,9 +18763,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 909212134}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7508480069659674932, guid: 881d0c1a0340230419961580d7261425, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1646590978}
     - targetCorrespondingSourceObject: {fileID: 7508480069659674932, guid: 881d0c1a0340230419961580d7261425, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1646590979}

@@ -2,6 +2,11 @@ using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
+    private const string ANIMATION_STATE = "State";
+    private const int NUM_IDLE = 0;
+    private const int NUM_WALK = 1;
+    private const int NUM_RUN = 2;
+    private const int NUM_FLY = 3;
     private enum State {
         Idle,
         Walk,
@@ -13,6 +18,7 @@ public class Player : MonoBehaviour {
     [SerializeField] private State initialState = State.Idle;
     [SerializeField] private PlayerMoveComponent moveComponent;
     [SerializeField] private SpriteRenderer playerSprite;
+    [SerializeField] private Animator playerAnimator;
     [SerializeField] private PlayerCamera playerCamera;
     private State currentState;
     private PlayerInputActions playerInputActions;
@@ -166,6 +172,23 @@ public class Player : MonoBehaviour {
     }
 
     private void ChangeState(State toState) {
+        switch (toState) {
+            case State.Idle:
+                playerAnimator.SetInteger(ANIMATION_STATE, NUM_IDLE);
+                break;
+            case State.Walk:
+                playerAnimator.SetInteger(ANIMATION_STATE, NUM_WALK);
+                break;
+            case State.Run:
+                playerAnimator.SetInteger(ANIMATION_STATE, NUM_RUN);
+                break;
+            case State.Fall:
+                playerAnimator.SetInteger(ANIMATION_STATE, NUM_FLY);
+                break;
+            case State.Jump:
+                playerAnimator.SetInteger(ANIMATION_STATE, NUM_FLY);
+                break;
+        }
         currentState = toState;
     }
 
