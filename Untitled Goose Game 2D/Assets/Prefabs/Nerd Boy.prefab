@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 573752162088594964}
   - component: {fileID: 7445227683812599071}
   m_Layer: 0
-  m_Name: Circle
+  m_Name: Alert Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -199,6 +199,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2020537459002769012}
+  - component: {fileID: 3706876749029334057}
   m_Layer: 0
   m_Name: Nerd Boy
   m_TagString: Untagged
@@ -223,3 +224,34 @@ Transform:
   - {fileID: 573752162088594964}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3706876749029334057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3176853215180611658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1a6d77708fa6404098d33e9d7153e3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialState: 0
+  alertArea: {fileID: 573752162088594964}
+  boyAnimator: {fileID: 2059434710977354428}
+  player: {fileID: 0}
+  alertFilter:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 64
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  timeScared: 2
