@@ -340,7 +340,7 @@ GameObject:
   - component: {fileID: 7166952355389699742}
   - component: {fileID: 7079025779098075768}
   m_Layer: 7
-  m_Name: Bench
+  m_Name: OneSidedPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

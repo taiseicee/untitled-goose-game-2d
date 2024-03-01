@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bench : MonoBehaviour {
-    [SerializeField] private BoxCollider2D benchCollider;
+public class OneSidedPlatform : MonoBehaviour {
+    [SerializeField] private BoxCollider2D platformCollider;
     [SerializeField] private Transform enableCheckArea;
     [SerializeField] private Transform disableCheckArea;
     [SerializeField] private ContactFilter2D canStepFilter;
 
     void Start() {
-        benchCollider.enabled = false;
+        platformCollider.enabled = false;
     }
 
     void Update() {
@@ -23,7 +23,7 @@ public class Bench : MonoBehaviour {
         );
 
         if (numDisableCheckAreaCollisions > 0) {
-            benchCollider.enabled = false;
+            platformCollider.enabled = false;
             return;
         }
 
@@ -38,10 +38,10 @@ public class Bench : MonoBehaviour {
         );
 
         if (numEnableCheckAreaCollisions <= 0) {
-            benchCollider.enabled = false;
+            platformCollider.enabled = false;
             return;
         }
 
-        benchCollider.enabled = true;
+        platformCollider.enabled = true;
     }
 }
