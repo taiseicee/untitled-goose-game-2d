@@ -5516,7 +5516,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2112969459951627122, guid: 0a67211afcd8915449bbed94473a9530, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2994156952759362304, guid: 0a67211afcd8915449bbed94473a9530, type: 3}
       propertyPath: m_LocalScale.x
@@ -5586,6 +5586,10 @@ PrefabInstance:
       propertyPath: colliderPlayer
       value: 
       objectReference: {fileID: 401195240}
+    - target: {fileID: 6628104654264568830, guid: 0a67211afcd8915449bbed94473a9530, type: 3}
+      propertyPath: worldBoundsObject
+      value: 
+      objectReference: {fileID: 1408125132}
     - target: {fileID: 6628104654264568830, guid: 0a67211afcd8915449bbed94473a9530, type: 3}
       propertyPath: ballKickFilter.useLayerMask
       value: 1
