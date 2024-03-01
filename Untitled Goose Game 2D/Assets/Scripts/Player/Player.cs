@@ -23,6 +23,7 @@ public class Player : MonoBehaviour {
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
         moveComponent.Init(this);
+        
     }
 
     private void Update() {
