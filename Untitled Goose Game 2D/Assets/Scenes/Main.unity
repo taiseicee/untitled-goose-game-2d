@@ -5189,6 +5189,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 774532315}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaaf0fe4276f6a740874033729418bd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraMoveSpeed: 0.05
+  worldBoundsObject: {fileID: 1408125132}
 --- !u!212 &715500202 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 8226581135232125254, guid: 881d0c1a0340230419961580d7261425, type: 3}
@@ -6885,6 +6899,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1408125131}
   - component: {fileID: 1408125132}
+  - component: {fileID: 1408125133}
   m_Layer: 0
   m_Name: WorldBounds
   m_TagString: Untagged
