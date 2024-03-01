@@ -4,6 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour {
     private const string ANIMATION_STATE = "State";
     private const string ANIMATION_SHOULD_HONK = "ShouldHonk";
+    private const string ANIMATION_SHOULD_BREATHE = "ShouldBreathe";
     private const int NUM_IDLE = 0;
     private const int NUM_WALK = 1;
     private const int NUM_RUN = 2;
@@ -21,9 +22,11 @@ public class Player : MonoBehaviour {
     [SerializeField] private SpriteRenderer playerSprite;
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private PlayerCamera playerCamera;
+    [SerializeField] private float timeShouldBreathe = 5f;
     private State currentState;
     private PlayerInputActions playerInputActions;
     private float direction = 1f;
+    private float timeSinceBreathe = 0f;
 
     private void Awake() {
         ChangeState(initialState);
@@ -59,8 +62,6 @@ public class Player : MonoBehaviour {
                 break;
         }
 
-        playerAnimator.SetBool(ANIMATION_SHOULD_HONK, false);
-
         if (shouldHonk) HandleHonk();
         playerSprite.flipX = direction < 0f ? true : false;
         playerCamera.SetDirection(direction);
@@ -78,7 +79,20 @@ public class Player : MonoBehaviour {
             return;
         }
         
-        if (playerDirectionInput == 0f) return;
+        if (playerDirectionInput == 0f) {
+            timeSinceBreathe += Time.deltaTime;
+
+            playerAnimator.SetBool(ANIMATION_SHOULD_HONK, false);
+
+            if (timeSinceBreathe >= timeShouldBreathe) {
+                playerAnimator.SetBool(ANIMATION_SHOULD_BREATHE, true);
+                timeSinceBreathe = 0f;
+            } else {
+                playerAnimator.SetBool(ANIMATION_SHOULD_BREATHE, false);
+            }
+            
+            return;
+        }
 
         if (shouldRun) {
             ChangeState(State.Run);
@@ -174,6 +188,7 @@ public class Player : MonoBehaviour {
     private void ChangeState(State toState) {
         switch (toState) {
             case State.Idle:
+                timeSinceBreathe = 0f;
                 playerAnimator.SetInteger(ANIMATION_STATE, NUM_IDLE);
                 break;
             case State.Walk:

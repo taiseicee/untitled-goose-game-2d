@@ -5,6 +5,7 @@ using UnityEngine;
 public class Boy : MonoBehaviour {
     private const string IS_SCARED = "IsScared";
     private const string SHOULD_DROP_BALL = "ShouldDropBall";
+    private const string SHOULD_BREATHE = "ShouldBreathe";
     private enum State {
         Idle,
         Scared
@@ -16,9 +17,11 @@ public class Boy : MonoBehaviour {
     [SerializeField] private GameObject ball;
     [SerializeField] private ContactFilter2D alertFilter;
     [SerializeField] private float timeScared = 2f;
+    [SerializeField] private float timeShouldBreathe = 5f;
     private State currentState;
     private float timeScaredElapsed = 0f;
     private bool isFirstInteraction = true;
+    private float timeSinceBreathe = 0f;
     
     private void Start() {
         ChangeState(initialState);
@@ -46,9 +49,18 @@ public class Boy : MonoBehaviour {
             alertAreaResults
         );
 
-        if (numCollisions <= 0) return;
+        if (numCollisions <= 0 || !player.GetDidHonk()) {
+            timeSinceBreathe += Time.deltaTime;
 
-        if (!player.GetDidHonk()) return;
+            if (timeSinceBreathe >= timeShouldBreathe) {
+                boyAnimator.SetBool(SHOULD_BREATHE, true);
+                timeSinceBreathe = 0f;
+            } else {
+                boyAnimator.SetBool(SHOULD_BREATHE, false);
+            }
+
+            return;
+        }
 
         timeScaredElapsed = 0f;
         boyAnimator.SetBool(IS_SCARED, true);
