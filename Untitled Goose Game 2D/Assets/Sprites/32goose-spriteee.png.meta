@@ -106,6 +106,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -722,7 +735,7 @@ TextureImporter:
       name: 32goose-spriteee_36
       rect:
         serializedVersion: 2
-        x: 324
+        x: 325
         y: 384
         width: 324
         height: 190
@@ -743,12 +756,12 @@ TextureImporter:
       name: 32goose-spriteee_37
       rect:
         serializedVersion: 2
-        x: 648
+        x: 668
         y: 384
         width: 324
         height: 190
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.45, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -764,12 +777,12 @@ TextureImporter:
       name: 32goose-spriteee_38
       rect:
         serializedVersion: 2
-        x: 972
+        x: 992
         y: 384
         width: 324
         height: 188
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.45, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -848,12 +861,12 @@ TextureImporter:
       name: 32goose-spriteee_44
       rect:
         serializedVersion: 2
-        x: 324
+        x: 344
         y: 0
         width: 324
         height: 190
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.45, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -869,12 +882,12 @@ TextureImporter:
       name: 32goose-spriteee_45
       rect:
         serializedVersion: 2
-        x: 648
+        x: 668
         y: 0
         width: 324
         height: 190
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.45, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -890,12 +903,12 @@ TextureImporter:
       name: 32goose-spriteee_46
       rect:
         serializedVersion: 2
-        x: 972
+        x: 992
         y: 0
         width: 324
         height: 190
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.45, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
