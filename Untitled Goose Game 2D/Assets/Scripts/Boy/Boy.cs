@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Boy : MonoBehaviour {
     private const string IS_SCARED = "IsScared";
+    private const string SHOULD_DROP_BALL = "ShouldDropBall";
     private enum State {
         Idle,
         Scared
@@ -12,10 +13,12 @@ public class Boy : MonoBehaviour {
     [SerializeField] private Transform alertArea;
     [SerializeField] private Animator boyAnimator;
     [SerializeField] private Player player;
+    [SerializeField] private GameObject ball;
     [SerializeField] private ContactFilter2D alertFilter;
     [SerializeField] private float timeScared = 2f;
     private State currentState;
     private float timeScaredElapsed = 0f;
+    private bool isFirstInteraction = true;
     
     private void Start() {
         ChangeState(initialState);
@@ -56,6 +59,14 @@ public class Boy : MonoBehaviour {
         if (timeScaredElapsed < timeScared) return;
 
         timeScaredElapsed = 0f;
+
+        if (isFirstInteraction) {
+            isFirstInteraction = false;
+            boyAnimator.SetBool(SHOULD_DROP_BALL, true);
+            ball.SetActive(true);
+            return;
+        }
+
         boyAnimator.SetBool(IS_SCARED, false);
         ChangeState(State.Idle);
     }
