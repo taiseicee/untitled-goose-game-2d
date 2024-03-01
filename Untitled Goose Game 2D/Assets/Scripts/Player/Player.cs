@@ -17,6 +17,7 @@ public class Player : MonoBehaviour {
     private State currentState;
     private PlayerInputActions playerInputActions;
     private float direction = 1f;
+    private bool didHonk = false;
 
     private void Awake() {
         ChangeState(initialState);
@@ -51,6 +52,8 @@ public class Player : MonoBehaviour {
                 HandleStateJump(playerDirectionInput);
                 break;
         }
+
+        didHonk = false;
 
         if (shouldHonk) HandleHonk();
         playerSprite.flipX = direction < 0f ? true : false;
@@ -159,10 +162,12 @@ public class Player : MonoBehaviour {
     }
 
     private void HandleHonk() {
-        print("HONK!");
+        didHonk = true;
     }
 
     private void ChangeState(State toState) {
         currentState = toState;
     }
+
+    public bool GetDidHonk() { return didHonk; }
 }

@@ -99,7 +99,7 @@ public class PlayerMoveComponent : MonoBehaviour {
             Vector2.down,
             walkableFilter,
             raycastResults,
-            predictiveCollider.radius * 2f
+            predictiveCollider.radius * 2f + snapBuffer
         );
 
         if (numRaycastHits < 1) return;
