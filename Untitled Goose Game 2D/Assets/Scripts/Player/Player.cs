@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
     private const string ANIMATION_STATE = "State";
+    private const string ANIMATION_SHOULD_HONK = "ShouldHonk";
     private const int NUM_IDLE = 0;
     private const int NUM_WALK = 1;
     private const int NUM_RUN = 2;
@@ -23,7 +24,6 @@ public class Player : MonoBehaviour {
     private State currentState;
     private PlayerInputActions playerInputActions;
     private float direction = 1f;
-    private bool didHonk = false;
 
     private void Awake() {
         ChangeState(initialState);
@@ -59,7 +59,7 @@ public class Player : MonoBehaviour {
                 break;
         }
 
-        didHonk = false;
+        playerAnimator.SetBool(ANIMATION_SHOULD_HONK, false);
 
         if (shouldHonk) HandleHonk();
         playerSprite.flipX = direction < 0f ? true : false;
@@ -168,7 +168,7 @@ public class Player : MonoBehaviour {
     }
 
     private void HandleHonk() {
-        didHonk = true;
+        playerAnimator.SetBool(ANIMATION_SHOULD_HONK, true);
     }
 
     private void ChangeState(State toState) {
@@ -192,5 +192,5 @@ public class Player : MonoBehaviour {
         currentState = toState;
     }
 
-    public bool GetDidHonk() { return didHonk; }
+    public bool GetDidHonk() { return playerAnimator.GetBool(ANIMATION_SHOULD_HONK); }
 }
