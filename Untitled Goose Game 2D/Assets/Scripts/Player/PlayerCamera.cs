@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour {
     [SerializeField, Range(0f, 1f)] private float cameraMoveSpeed = 0.05f;
+    [SerializeField] private SpriteRenderer worldBoundsObject;
     private float cameraHorizontalOffset;
     private float offsetDirection = 1f;
     private Bounds cameraBounds;
     private void Start() {
         Camera playerCamera = GetComponent<Camera>();
+        Bounds worldBounds = worldBoundsObject.bounds;
 
         float viewportHeight = playerCamera.orthographicSize;
         float viewportWidth = viewportHeight * playerCamera.aspect;
 
-        float cameraMinX = Globals.WorldBounds.min.x + viewportWidth;
-        float cameraMaxX = Globals.WorldBounds.max.x - viewportWidth;
+        float cameraMinX = worldBounds.min.x + viewportWidth;
+        float cameraMaxX = worldBounds.max.x - viewportWidth;
 
-        float cameraMinY = Globals.WorldBounds.min.y + viewportHeight;
-        float cameraMaxY = Globals.WorldBounds.max.y - viewportHeight;
+        float cameraMinY = worldBounds.min.y + viewportHeight;
+        float cameraMaxY = worldBounds.max.y - viewportHeight;
 
         cameraBounds = new Bounds();
         cameraBounds.SetMinMax(

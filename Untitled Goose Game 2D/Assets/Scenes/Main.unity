@@ -5107,6 +5107,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -6884,7 +6885,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1408125131}
   - component: {fileID: 1408125132}
-  - component: {fileID: 1408125133}
   m_Layer: 0
   m_Name: WorldBounds
   m_TagString: Untagged
@@ -16080,7 +16080,7 @@ PrefabInstance:
     - target: {fileID: 580342548598833573, guid: 881d0c1a0340230419961580d7261425, type: 3}
       propertyPath: playerCamera
       value: 
-      objectReference: {fileID: 519420031}
+      objectReference: {fileID: 519420033}
     - target: {fileID: 580342548598833573, guid: 881d0c1a0340230419961580d7261425, type: 3}
       propertyPath: playerSprite
       value: 
@@ -16173,6 +16173,10 @@ PrefabInstance:
       propertyPath: allowedArea.width
       value: 127
       objectReference: {fileID: 0}
+    - target: {fileID: 6379548242918822028, guid: 881d0c1a0340230419961580d7261425, type: 3}
+      propertyPath: worldBoundsObject
+      value: 
+      objectReference: {fileID: 1408125132}
     - target: {fileID: 6379548242918822028, guid: 881d0c1a0340230419961580d7261425, type: 3}
       propertyPath: allowedArea.height
       value: 22
